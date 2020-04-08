@@ -2,25 +2,16 @@
 
 var player1 = {
   totalPts: 0,
-  turnPts: 0
+  turnPts: 0,
+  id: "p1"
+
 }
 
 var player2 = {
   totalPts: 0,
-  turnPts: 0
+  turnPts: 0,
+  id: "p2"
 }
-
-
-/* function PlayerScore() {
-  this.scores = [];
-  this.currentId = 0;
-}
-
-function Score (rollDice)
-  this.rollDice = rollDice;
-  // this.holdDice = holdDice;
-
-} */
 
 // User Inteface Logic
 
@@ -41,11 +32,28 @@ function rollDice(player) {
     $("#p1-turn-points").text(player1.turnPts);
     $("#p1-rolled-number").text(player1.turnPts);
     //next player 
-
+    //nextPlayer()
   }
 }
 
-function hold()
+function hold(player) {
+  //add turnPts to total pts
+  player.totalPts += player.turnPts;
+  $("#p1-total-points").text(player.totalPts);
+  if (player.totalPts >= 30) { //should be 100. set to 30 for testing purposes
+    console.log(player.id + " is the winner!");
+    //game should stop running here
+  } else {
+    console.log("go to next player")
+    //set current points back to 0
+    player.turnPts = 0;
+    $("#p1-turn-points").text(0);
+
+    //nextPlayer()
+
+
+  }
+}
 
 
 $(document).ready(function() {
@@ -53,6 +61,11 @@ $(document).ready(function() {
     event.preventDefault();
     rollDice(player1);
 
+  });
+
+  $('button#p1-hold').click(function(event) {
+    event.preventDefault();
+    hold(player1);
   });
 
 });
