@@ -1,0 +1,16 @@
+.player-panel {
+  border: 1px;
+  border-radius: 3px;
+  border-style: solid;
+  padding: 10px;
+  margin: 10px
+
+}
+
+.active {
+  background-color: red;
+  width: 50%;
+  padding: 6px;
+  border-radius: 6px;
+  font-weight: bold;
+}
