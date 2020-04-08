@@ -55,6 +55,11 @@ function hold(player) {
   }
 }
 
+function nextPlayer() {
+  //check what the current player is then switch to the next one
+
+}
+
 
 $(document).ready(function() {
   $('button#p1-roll').click(function(event) {
