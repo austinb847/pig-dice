@@ -24,7 +24,7 @@ function rollDice(player) {
     player.turnPts += roll;
     //add this score to UI Round score
     $("#p1-turn-points").text(player1.turnPts);
-    $("#p1-rolled-number").text(player1.turnPts);
+    $("#p1-rolled-number").text(roll);
   } else { 
     // player score = 0
     player.turnPts = 0;
