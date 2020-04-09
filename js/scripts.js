@@ -29,8 +29,8 @@ Game.prototype.holdTurn = function() {
   var player = this.players[this.currentPlayerIndex];
   player.totalPts += player.roundScore;
   console.log(player.totalPts);  
-  if (player.totalPts >= 50) {
-    console.log(player.name + " win!");
+  if (player.totalPts >= 100) {
+    console.log(player.name + " wins!");
     this.gameRunning = false; //game stops running
   } else {
     player.roundScore = 0;
