@@ -1,6 +1,68 @@
 // Business Logic
+var Game = function() {
+  this.players = [];
+  this.gameRunning = true;
+  this.currentPlayerIndex = 0;
 
-var player1 = {
+}
+
+Game.prototype.addPlayer = function(player) {
+  this.players.push(player);
+};
+
+Game.prototype.rollDice = function() {
+  var player = this.players[this.currentPlayerIndex];
+  var roll = Math.floor((Math.random() * 6) + 1);
+  player.rolledDice = roll;
+  console.log(roll);
+  if (roll !== 1) {
+    player.roundScore += roll;
+  } else {
+    player.roundScore = 0;
+    //nextPlayer();
+    //this.nextPlayer(this.currentPlayerIndex);
+  }
+}
+
+Game.prototype.holdTurn = function() {
+  var player = this.players[this.currentPlayerIndex];
+  player.totalPts += player.roundScore;
+  console.log(player.totalPts);  
+  if (player.totalPts >= 50) {
+    console.log("player wins");
+    this.gameRunning = false; //game stops running
+  } else {
+    player.roundScore = 0;
+    //nextPlayer
+  } 
+}
+
+Game.prototype.nextPlayer = function() {
+  this.currentPlayerIndex = 1 - this.currentPlayerIndex;
+
+}
+
+
+
+
+var Player = function() {
+  this.totalPts = 0;
+  this.roundScore = 0;
+};
+
+/* var pigDiceGame = new Game();
+var player1 = new Player();
+pigDiceGame.addPlayer(player1);
+console.log(pigDiceGame.players[0]);
+pigDiceGame.rollDice(player1);
+console.log(player1.roundScore);
+console.log(pigDiceGame.players[0]);
+pigDiceGame.rollDice(player1);
+console.log(player1.roundScore);
+console.log(pigDiceGame.players[0]); */
+
+
+/* var player1 = {
   totalPts: 0,
   turnPts: 0,
   id: "p1"
@@ -58,19 +120,36 @@ function hold(player) {
 function nextPlayer() {
   //check what the current player is then switch to the next one
 
-}
+} */
 
 
 $(document).ready(function() {
-  $('button#p1-roll').click(function(event) {
+  var pigDiceGame = new Game();
+  var player1 = new Player();
+  var player2 = new Player();
+  pigDiceGame.addPlayer(player1);
+  pigDiceGame.addPlayer(player2);
+
+  
+
+
+
+
+
+  $('button#p0-roll').click(function(event) {
     event.preventDefault();
-    rollDice(player1);
+    pigDiceGame.rollDice();
+    $("#p0-turn-points").text(pigDiceGame.players[0].roundScore);
+    $("#p0-rolled-number").text(pigDiceGame.players[0].rolledDice);
 
   });
 
-  $('button#p1-hold').click(function(event) {
+  $('button#p0-hold').click(function(event) {
     event.preventDefault();
-    hold(player1);
+    pigDiceGame.holdTurn();
+    $("#p0-total-points").text(pigDiceGame.players[0].totalPts);
+    $("#p0-turn-points").text(pigDiceGame.players[0].roundScore);
+    $("#p0-rolled-number").text(0);
   });
 
 });
