@@ -19,7 +19,8 @@ Game.prototype.rollDice = function() {
     player.roundScore += roll;
   } else {
     player.roundScore = 0;
-    //nextPlayer();
+    this.nextPlayer();
+    console.log("switched player")
     //this.nextPlayer(this.currentPlayerIndex);
   }
 }
@@ -29,11 +30,13 @@ Game.prototype.holdTurn = function() {
   player.totalPts += player.roundScore;
   console.log(player.totalPts);  
   if (player.totalPts >= 50) {
-    console.log("player wins");
+    console.log(player.name + " win!");
     this.gameRunning = false; //game stops running
   } else {
     player.roundScore = 0;
     //nextPlayer
+    this.nextPlayer();
+    console.log("switched player")
   } 
 }
 
@@ -42,12 +45,10 @@ Game.prototype.nextPlayer = function() {
 
 }
 
-
-
-
-var Player = function() {
+var Player = function(name) {
   this.totalPts = 0;
   this.roundScore = 0;
+  this.name = name;
 };
 
 /* var pigDiceGame = new Game();
@@ -125,8 +126,8 @@ function nextPlayer() {
 
 $(document).ready(function() {
   var pigDiceGame = new Game();
-  var player1 = new Player();
-  var player2 = new Player();
+  var player1 = new Player("player1");
+  var player2 = new Player("player2");
   pigDiceGame.addPlayer(player1);
   pigDiceGame.addPlayer(player2);
 
@@ -150,6 +151,22 @@ $(document).ready(function() {
     $("#p0-total-points").text(pigDiceGame.players[0].totalPts);
     $("#p0-turn-points").text(pigDiceGame.players[0].roundScore);
     $("#p0-rolled-number").text(0);
+  }); 
+
+  $('button#p1-roll').click(function(event) {
+    event.preventDefault();
+    pigDiceGame.rollDice();
+    $("#p1-turn-points").text(pigDiceGame.players[1].roundScore);
+    $("#p1-rolled-number").text(pigDiceGame.players[1].rolledDice);
+
+  });
+
+  $('button#p1-hold').click(function(event) {
+    event.preventDefault();
+    pigDiceGame.holdTurn();
+    $("#p1-total-points").text(pigDiceGame.players[1].totalPts);
+    $("#p1-turn-points").text(pigDiceGame.players[1].roundScore);
+    $("#p1-rolled-number").text(0);
   });
 
 });
